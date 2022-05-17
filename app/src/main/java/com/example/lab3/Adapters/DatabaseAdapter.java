@@ -34,8 +34,7 @@ public class DatabaseAdapter extends RecyclerView.Adapter<DatabaseAdapter.Databa
         }
     }
 
-    public DatabaseAdapter (Context context, HashMap<String, String> data) {
-        this.list = data;
+    public DatabaseAdapter (Context context) {
         this.lI = LayoutInflater.from(context);
     }
 
@@ -48,6 +47,11 @@ public class DatabaseAdapter extends RecyclerView.Adapter<DatabaseAdapter.Databa
             }
         }
         return null;
+    }
+
+    public void setSettings(Map<String,String> data) {
+        list = data;
+        notifyDataSetChanged();
     }
 
     @NonNull
