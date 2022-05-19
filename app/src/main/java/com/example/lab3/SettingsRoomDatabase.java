@@ -31,17 +31,19 @@ public abstract class SettingsRoomDatabase extends  RoomDatabase{
         PopulateDbAsync(SettingsRoomDatabase db) {
             dao = db.settingsDao();
             init = new HashMap<String,String>() {{
-                put("Key1", "Value1");
-                put("Key2", "Value2");
+                put("background", "#333");
+                put("textSize", "16dp");
             }};
         }
 
         @Override
         protected Void doInBackground(Void... voids) {
-            for ( Map.Entry<String,String> e : init.entrySet() ) {
-                String key = e.getKey();
-                String val = e.getValue();
-                dao.inset(new Settings(key, val));
+            if (dao.getAny().length < 1) {
+                for (Map.Entry<String, String> e : init.entrySet()) {
+                    String key = e.getKey();
+                    String val = e.getValue();
+                    dao.insert(new Settings(key, key, val));
+                }
             }
             return null;
         }

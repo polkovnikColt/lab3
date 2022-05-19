@@ -5,17 +5,18 @@ import android.os.AsyncTask;
 
 import androidx.lifecycle.LiveData;
 
+import com.example.lab3.Async.DeleteAsyncTask;
 import com.example.lab3.Dao.SettingsDao;
 import com.example.lab3.Entities.Settings;
 import com.example.lab3.SettingsRoomDatabase;
 
-import java.util.Map;
+import java.util.List;
 
 public class SettingRepository {
     private SettingsDao settingsDao;
-    private LiveData<Map<String,String>> allSettings;
+    private LiveData<List<Settings>> allSettings;
 
-    private class InsertAsyncTask extends AsyncTask<Settings, Void, Void> {
+    private class InsertAsyncTask extends AsyncTask<Settings, String, String> {
 
         private SettingsDao asyncDao;
 
@@ -24,9 +25,9 @@ public class SettingRepository {
         }
 
         @Override
-        protected Void doInBackground(Settings... settings) {
-            asyncDao.inset(settings[0]);
-            return null;
+        protected String doInBackground(Settings... settings) {
+            asyncDao.insert(settings[0]);
+            return "Success";
         }
     }
 
@@ -36,8 +37,12 @@ public class SettingRepository {
         allSettings = settingsDao.getAll();
     }
 
-    public LiveData<Map<String, String>> getAllSettings() {
+    public LiveData<List<Settings>> getAllSettings() {
         return allSettings;
+    }
+
+    public void deleteAll() {
+        new DeleteAsyncTask(settingsDao).execute();
     }
 
    public void insetSetting(Settings settings) {

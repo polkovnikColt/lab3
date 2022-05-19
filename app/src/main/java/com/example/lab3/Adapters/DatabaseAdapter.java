@@ -9,15 +9,17 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.lab3.Entities.Settings;
 import com.example.lab3.R;
 
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class DatabaseAdapter extends RecyclerView.Adapter<DatabaseAdapter.DatabaseViewHolder> {
 
-    private Map<String, String> list;
+    private List<Settings> list;
     private LayoutInflater lI;
 
     class DatabaseViewHolder extends RecyclerView.ViewHolder {
@@ -38,18 +40,7 @@ public class DatabaseAdapter extends RecyclerView.Adapter<DatabaseAdapter.Databa
         this.lI = LayoutInflater.from(context);
     }
 
-    private String getKeyByValue(Map<String, String> map, String value) {
-        Collection<String> collection = map.keySet();
-        for (String key: collection) {
-            String temp = map.get(key);
-            if(temp.equals(value)) {
-                return key;
-            }
-        }
-        return null;
-    }
-
-    public void setSettings(Map<String,String> data) {
+    public void setSettings(List<Settings> data) {
         list = data;
         notifyDataSetChanged();
     }
@@ -63,14 +54,14 @@ public class DatabaseAdapter extends RecyclerView.Adapter<DatabaseAdapter.Databa
 
     @Override
     public void onBindViewHolder(@NonNull DatabaseAdapter.DatabaseViewHolder holder, int position) {
-        String value = list.get("Key" + position);
-        String key = this.getKeyByValue(list, value);
-        holder.tv1.setText(key);
-        holder.tv2.setText(value);
+        Settings s = list.get(position);
+        holder.tv1.setText(s.getKey());
+        holder.tv2.setText(s.getValue());
     }
 
     @Override
     public int getItemCount() {
-        return list.size();
+        if(list != null){ return list.size();}
+        return 0;
     }
 }

@@ -1,5 +1,7 @@
 package com.example.lab3.Entities;
 
+import android.content.Intent;
+
 import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
@@ -19,7 +21,8 @@ public class Settings {
     @ColumnInfo(name="value")
     private String value;
 
-    public Settings(String key, String value) {
+    public Settings(String id, String key, String value) {
+        this.id = id;
         this.key = key;
         this.value = value;
     }

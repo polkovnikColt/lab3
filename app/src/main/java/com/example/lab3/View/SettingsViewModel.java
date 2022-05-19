@@ -9,12 +9,13 @@ import androidx.lifecycle.LiveData;
 import com.example.lab3.Entities.Settings;
 import com.example.lab3.Repoitories.SettingRepository;
 
+import java.util.List;
 import java.util.Map;
 
 public class SettingsViewModel extends AndroidViewModel {
 
     private SettingRepository repository;
-    private LiveData<Map<String, String>> data;
+    private LiveData<List<Settings>> data;
 
     public SettingsViewModel(@NonNull Application application) {
         super(application);
@@ -22,11 +23,13 @@ public class SettingsViewModel extends AndroidViewModel {
         data = repository.getAllSettings();
     }
 
-    public LiveData<Map<String, String>> getAllData() {
+    public LiveData<List<Settings>> getAllData() {
         return data;
     }
 
     public void insert(Settings settings) {
         repository.insetSetting(settings);
     }
+
+    public void deleteAll() {repository.deleteAll();}
 }
